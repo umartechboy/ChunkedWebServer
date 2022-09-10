@@ -24,7 +24,7 @@
 #include <Arduino.h>
 #include <esp32-hal-log.h>
 #include <libb64/cencode.h>
-#include "WiFiServer.h"
+#include "ChunkedWebServer.h"
 #include "WiFiClient.h"
 #include "WebServer.h"
 #include "FS.h"

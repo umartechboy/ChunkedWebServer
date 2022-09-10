@@ -28,7 +28,7 @@
 #include "WiFiClient.h"
 #include "WebServer.h"
 #include "FS.h"
-#include "SPIFFS.h"
+#include <SPIFFS.h>
 #include "detail/RequestHandlersImpl.h"
 #include "mbedtls/md5.h"
 

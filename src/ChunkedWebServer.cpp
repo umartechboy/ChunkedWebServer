@@ -26,9 +26,8 @@
 #include <libb64/cencode.h>
 #include "ChunkedWebServer.h"
 #include "WiFiClient.h"
-#include "WebServer.h"
-#include "FS.h"
-#include <SPIFFS.h>
+#include <FS.h>
+#include <LittleFS.h>
 #include "detail/RequestHandlersImpl.h"
 #include "mbedtls/md5.h"
 
@@ -478,9 +477,9 @@ void WebServer::sendContent_P(PGM_P content) {
   sendContent_P(content, strlen_P(content));
 }
 
-void WebServer::sendSpiffsFileAsChunk(const char* fileName)
+void WebServer::sendFileAsChunk(const char* fileName)
 {
-	File f = SPIFFS.open(fileName, "r");
+	File f = LittleFS.open(fileName, "r");
 	uint8_t buffer[5000];
 
 	int32_t tRead = f.read(buffer, 5000);

@@ -132,9 +132,9 @@ public:
   void sendContent_P(PGM_P content, size_t size);
   void sendChunkP(const char* PGMString);
   void beginChunkedResponse();
-  void sendSpiffsFileAsChunk(const char* fileName);
+  void sendFileAsChunk(const char* fileName);
   void beginChunkedResponse(String content_type);
-  void sendChunk(uint8_t* data, int length);   
+  void sendChunk(uint8_t* data, int length);
   void sendChunk(String str);
   void endChunkedResponse();
 

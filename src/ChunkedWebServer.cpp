@@ -676,6 +676,41 @@ void WebServer::onNotFound(THandlerFunction fn) {
   _notFoundHandler = fn;
 }
 
+WebServer* ThisServer;
+String wwwRoot = "";
+void wwwCallback() {
+
+  auto fileName = wwwRoot + ThisServer->uri();
+  if(ThisServer->uri() == "/")
+    fileName = wwwRoot + "/index.html";
+  if (LittleFS.exists(fileName)) {
+    using namespace mime;
+    for (int i =0; i < maxType; i++)
+      if (fileName.endsWith(String(FPSTR(mimeTable[i].endsWith)))) {
+        Serial.println("Type matched!");
+        ThisServer->beginChunkedResponse(String(FPSTR(mimeTable[i].mimeType)));
+        ThisServer->sendFileAsChunk(fileName.c_str());
+        ThisServer->endChunkedResponse();
+        return;
+      }
+    ThisServer->beginChunkedResponse("text/html");
+    ThisServer->sendChunk("<h1>Error 500</h1>File or resource \"");
+    ThisServer->sendChunk(ThisServer->uri());
+    ThisServer->sendChunk("\" is not supported by this server");
+  }
+  else {
+   ThisServer->beginChunkedResponse("text/html");
+   ThisServer->sendChunk("<h1>Error 404</h1>File or resource \"");
+   ThisServer->sendChunk(ThisServer->uri());
+   ThisServer->sendChunk("\" could not be found.");
+  }
+}
+void WebServer::onNotFound(String _wwwRoot) {
+  ThisServer = this;
+  wwwRoot = _wwwRoot;
+  _notFoundHandler = wwwCallback;
+}
+
 void WebServer::_handleRequest() {
   bool handled = false;
   if (!_currentHandler){

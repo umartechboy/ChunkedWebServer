@@ -90,6 +90,7 @@ public:
   void addHandler(RequestHandler* handler);
   void serveStatic(const char* uri, fs::FS& fs, const char* path, const char* cache_header = NULL );
   void onNotFound(THandlerFunction fn);  //called when handler is not assigned
+  void onNotFound(String wwwRoot = "/www");  // In case no handler is called, this can be used to serve a dir on the LittleFS as a www root.
   void onFileUpload(THandlerFunction fn); //handle file uploads
 
   String uri() { return _currentUri; }

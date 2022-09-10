@@ -23,7 +23,7 @@
 #include <esp32-hal-log.h>
 #include "WiFiServer.h"
 #include "WiFiClient.h"
-#include "WebServer.h"
+#include "ChunkedWebServer.h"
 #include "detail/mimetable.h"
 
 #ifndef WEBSERVER_MAX_POST_ARGS
